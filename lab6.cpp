@@ -46,7 +46,7 @@ class linkedList
 {
 private:       
     Nodo<T>* head;
-    // template <typename > friend class iterator;
+    template <typename U> friend class Iterator;
     
 public:    
     linkedList();
@@ -157,17 +157,17 @@ class Iterator
 {
 private:
     Nodo<T> *iterator;
-    Nodo<T> *posicion;
+    // Nodo<T> *posicion;
     
 public:
     Iterator();
     ~Iterator();
     bool hasNext();
-    Iterator begin() {return Iterator(nullptr); }
-    Iterator end(){ return Iterator(iterator); }
-    Iterator& operator++(){ ++iterator, return *this; }
-    int operator*() { return iterator->element; }
-    Iterator& operator=(Nodo *p);
+    Iterator begin();
+    Iterator end();
+    Iterator& operator++();
+    int operator*(int);
+    Iterator& operator=(Nodo<T> *p);
 };
 
 template <typename T>
@@ -186,6 +186,40 @@ bool Iterator<T>::hasNext(){
     {
         return true;
     }
+}
+
+template <typename T>
+int Iterator<T>::operator*(int){
+    return iterator->element;
+}
+
+template <typename T>
+Iterator<T> Iterator<T>::begin(){
+    return Iterator(head);
+}
+
+template<typename T>
+Iterator<T> Iterator<T>::end(){
+    while (hasNext())
+    {
+        iterator = iterator->next;
+    }
+    return Iterator(iterator);
+}
+
+template<typename T>
+Iterator<T> &Iterator<T>::operator=( Nodo<T> *p){
+    iterator = p;
+    return *this;
+}
+
+template<typename T>
+Iterator<T> &Iterator<T>::operator++(){
+    if (iterator != nullptr)
+    {
+        iterator = iterator->next;
+    }
+    return *this;
 }
 
 template <typename T>
@@ -234,7 +268,7 @@ int main(){
     lista2.find(12);
 
     /*
-    for (linkedList<int>::Iterator iterator = lista.begin(); iterator != lista.end(); iterator++)
+    for (linkedList<int>::Iterator iterator = lista2.begin(); iterator != lista2.end(); iterator++)
     {
         cout << *iterator << " ";
     }
