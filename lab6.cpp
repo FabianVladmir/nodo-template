@@ -195,7 +195,7 @@ int Iterator<T>::operator*(int){
 
 template <typename T>
 Iterator<T> Iterator<T>::begin(){
-    return Iterator(head);
+    return *head;
 }
 
 template<typename T>
@@ -261,19 +261,19 @@ int main(){
         }
         
     }
-    
+    /*
     lista2.print();
 
     lista2.find(17);
     lista2.find(12);
 
-    /*
+    
     for (linkedList<int>::Iterator iterator = lista2.begin(); iterator != lista2.end(); iterator++)
     {
         cout << *iterator << " ";
     }
-    
-    cout << endl;
     */
+    cout << endl;
+    
     return 0;
 }
