@@ -27,7 +27,7 @@ public:
     void remove(T eliminar);
     void print();
     void find(T valor);
-    Iterator begin();
+    Nodo<T>* getHead();
     ~linkedList();
 };
 
