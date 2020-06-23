@@ -32,6 +32,11 @@ linkedList<T>::linkedList( ){
     this->head = nullptr;
 }
 
+template<typename T>
+Nodo<T> *linkedList<T>::getHead(){
+    return head;
+}
+
 template <typename T>
 void linkedList<T> :: insertar(T valor){   
     
@@ -131,6 +136,12 @@ Iterator<T>::Iterator()
 {
     iterator = nullptr;
     //posicion = nullptr;
+}
+
+template <typename T>
+Iterator<T> Iterator<T>::begin(){
+  Nodo<T>* aux= linkedList<T>().gethead();
+  return Iterator(aux->next);
 }
 
 template <typename T>
