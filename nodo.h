@@ -14,6 +14,7 @@ public:
     ~Nodo();
 };
 
+
 template <typename T>
 class linkedList
 {
@@ -26,26 +27,66 @@ public:
     void insertar(T valor);
     void remove(T eliminar);
     void print();
-    void find(T valor);
-    Nodo<T>* getHead();
+    void find(T valor);    
     ~linkedList();
-};
 
+    // Iterator
+    class Iterator
+    {
+    private:
+        Nodo<T> *iterator;
+        template<typename U>friend class linkedList;
+        // Nodo<T> *posicion;
+        
+    public:
+        Iterator(){
+          iterator = nullptr;
+        }
+        
+        bool hasNext(){
+          if(iterator->next != nullptr){
+            return true;
+          }else{
+            return false;
+          }
+        }
 
-template <typename T>
-class Iterator
-{
-private:
-    Nodo<T> *iterator;
-    // Nodo<T> *posicion;
-    
-public:
-    Iterator();
-    ~Iterator();
-    bool hasNext();
-    Iterator begin();
-    Iterator end();
-    Iterator& operator++();
-    int operator*(int);
-    Iterator& operator=(Nodo<T> *p);
+        bool operator!=(Iterator &inn) const{
+          return iterator != inn.iterator;
+        }
+
+        Iterator& operator++(){
+          if(iterator != nullptr){
+            iterator = iterator->next;
+          }
+          return iterator;
+        }
+
+        Iterator& operator++(int){
+          Iterator aux = *this;
+          iterator = iterator->next;
+          return aux;
+        }
+
+        T& operator*(){
+          return iterator->element;
+        }
+        Iterator& operator=(Nodo<T> *p){
+          iterator = p;
+          return *this;
+        } 
+        ~Iterator();       
+    }; // fin clase iterator
+
+    Iterator begin(){
+      return Iterator(head);
+    }
+
+    Iterator end(){
+      Nodo<T>* aux = head;
+      while(aux != nullptr){
+        aux = aux->next;        
+      }
+      return Iterator(aux);
+    }
 };
